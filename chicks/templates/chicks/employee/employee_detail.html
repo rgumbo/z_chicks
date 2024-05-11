@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> National ID	:	{{ employee.ee_num }}		  </p>
+  <p class="h2"> First Name		:	{{ employee.ee_ey_num }}	  </p>
+  <p class="h2"> Surname		:	{{ employee.ee_initials }}	  </p>
+  <p class="h2"> Date Of Birth	:	{{ employee.ee_sname }}		  </p>
+  <p class="h2"> Relationship	:	{{ employee.ee_nid }}	      </p>
+  <p class="h2"> Gender			:	{{ employee.ee_dob }}	      </p>
+  <p class="h2"> Birth Entry	:	{{ employee.ee_date_joined }} </p>
+
+ </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

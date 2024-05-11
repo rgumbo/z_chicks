@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Code	        :	{{item.si_code}}</p>
+  <p class="h2"> Name		    :	{{item.si_name}}</p>
+  <p class="h2"> Stock Type		:	{{item.si_st_code}}</p>
+  <p class="h2"> Package Type   :	{{item.si_pt_code}}</p>
+  <p class="h2"> Base Price	    :	{{item.si_price_b}}</p>
+  <p class="h2"> Base Curr.		:	{{item.si_cu_id_b}}</p>
+  <p class="h2"> Curr1 Price	:	{{item.si_price_1}}</p>
+  <p class="h2"> Currency 1	    :	{{item.si_cu_id_1}}</p>
+  <p class="h2"> Curr2 Price	:	{{item.si_price_2}}</p>
+  <p class="h2"> Currency 2	    :	{{item.si_cu_id_2}}</p>
+  <p class="h2"> Status			:	{{item.si_status}}</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

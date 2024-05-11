@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+
+  <p class="h2"> Code		:	{{cust.cs_code}}</p>
+  <p class="h2"> First Name :	{{cust.cs_fname}}</p>
+  <p class="h2"> Surname	:	{{cust.cs_sname}}</p>
+  <p class="h2"> Type	    :	{{cust.cs_type}}</p>
+  <p class="h2"> Phone		:	{{cust.cs_mobile}}</p>
+  <p class="h2"> Email	    :	{{cust.cs_email}}</p>
+  <p class="h2"> Contact	:	{{cust.cs_contact}}</p>
+  <p class="h2"> Address	:	{{cust.cs_paddress}}</p>
+  <p class="h2"> Reg. Date  :	{{cust.cs_reg_date}}</p>
+  <p class="h2"> Town	    :	{{cust.cs_to_code}}</p>
+  <p class="h2"> Status		:	{{cust.cs_status}}</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

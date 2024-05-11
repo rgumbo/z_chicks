@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div  class="col-md-10 col-xs-10 col-sm-10">
+    <h3 class="round3" style="text-align:center;">Stock Type</h3>
+  </div>
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ </div>
+ <div class="row">
+  <div class="col-md-10 col-xs-10 col-sm-10"></div>
+  <div class="col-md-2 col-xs-1 col-sm-1">
+   <br/>
+
+  </div>
+ </div>
+ <br/>
+ {% for s_type in StockType_list %}
+  <div class="row">
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div class="col-md-7 col-xs-7 col-sm-7">
+    <ul class="list-group">
+       <li class="list-group-item ">
+     <a href="{% url 'stockitem' s_type.pk %}">{{s_type.st_code}} -  {{s_type.st_name}} -  {{s_type.st_sl_code}}
+             -  {{s_type.st_desc}} -  {{s_type.st_status}}</a>  <span class="badge"></span>
+    </li>
+     </ul>
+    <br>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'editstocktype' s_type.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-pencil"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'addstockitem' s_type.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-th-list"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'stockitem' s_type.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-menu-down"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+  </div>
+ {% endfor %}
+</div>
+{% endblock %}

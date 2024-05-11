@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Code	        :	{{ item.oi_num}}</p>
+  <p class="h2"> Desc		    :	{{ item.oi_si_code}}</p>
+  <p class="h2"> Use Type		:	{{ item.oi_pt_code}}</p>
+  <p class="h2"> Size	        :	{{ item.oi_cu_id}}	</p>
+  <p class="h2"> Planned Size	:	{{ item.oi_ord_qty}}</p>
+  <p class="h2"> Actual Size	:	{{ item.oi_rec_qty}}</p>
+  <p class="h2"> Target Qty	    :	{{ item.oi_uprice}}</p>
+  <p class="h2"> Actual Qty		:	{{ item.oi_ucost}}</p>
+  <p class="h2"> Planning Price	:	{{ item.oi_trans_amnt}}</p>
+  <p class="h2"> Actual Price	:	{{ item.oi_base_amnt}}</p>
+  <p class="h2"> Status			:	{{ item.oi_rate}}</p>
+    <p class="h2"> Status		:	{{ item.oi_status}}</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

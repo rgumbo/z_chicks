@@ -1,0 +1,1 @@
+c:\z_chicks\z_chicks\scripts\activate

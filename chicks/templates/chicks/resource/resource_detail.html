@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Activity	       :	{{res.rs_ac_num}}		</p>
+  <p class="h2"> Description	   :	{{res.rs_desc}}	</p>
+  <p class="h2"> Unit of Measure   :	{{res.rs_unit}}	</p>
+  <p class="h2"> Req. Quantity	   :	{{res.rs_required}}		</p>
+  <p class="h2"> Issued Quantity   :	{{res.rs_provided}}	</p>
+  <p class="h2"> Date Requested	   :	{{res.rs_req_date}}	</p>
+  <p class="h2"> Date Issued	   :	{{res.rs_date_provided}}	</p>
+  <p class="h2"> Approved ?		   :	{{res.rs_approved}}	</p>
+   <p class="h2"> Status		   :	{{res.rs_status}}	</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

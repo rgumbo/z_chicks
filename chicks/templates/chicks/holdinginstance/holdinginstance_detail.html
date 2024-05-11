@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Code	        :	{{hold.hi_code}}		</p>
+  <p class="h2"> Desc		    :	{{hold.hi_desc}}	</p>
+  <p class="h2"> Use Type		:	{{hold.hi_use_type}}	</p>
+  <p class="h2"> Size	        :	{{hold.hi_size}}		</p>
+  <p class="h2"> Planned Size	:	{{hold.hi_psize}}	</p>
+  <p class="h2"> Actual Size	:	{{hold.hi_asize}}	</p>
+  <p class="h2"> Target Qty	    :	{{hold.hi_tqty}}	</p>
+  <p class="h2"> Actual Qty		:	{{hold.hi_aqty}}	</p>
+  <p class="h2"> Planning Price	:	{{hold.hi_pprice}}	</p>
+  <p class="h2"> Actual Price	:	{{hold.hi_aprice}}	</p>
+  <p class="h2"> Status			:	{{hold.hi_status}}	</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

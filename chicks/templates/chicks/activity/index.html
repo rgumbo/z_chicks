@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div  class="col-md-10 col-xs-10 col-sm-10">
+    <h3 class="round3" style="text-align:center;">Activity</h3>
+  </div>
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ </div>
+ <div class="row">
+  <div class="col-md-10 col-xs-10 col-sm-10"></div>
+  <div class="col-md-2 col-xs-1 col-sm-1">
+   <br/>
+
+  </div>
+ </div>
+ <br/>
+ {% for act in Activity_list %}
+  <div class="row">
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div class="col-md-7 col-xs-7 col-sm-7">
+    <ul class="list-group">
+       <li class="list-group-item ">
+     <a href="{% url 'addnote' act.pk %}">{{act.ac_hi_num}} - {{act.ac_day}} - {{act.ac_date}} - {{act.ac_o_qty}}
+                     - {{act.ac_c_qty}} - {{act.ac_t_wqt}} - {{act.ac_a_wqt}} - {{act.ac_morlity}}
+                     - {{act.ac_e_cost}} - {{act.ac_desc}} - {{act.ac_status}}
+
+</a>  <span class="badge"></span>
+    </li>
+     </ul>
+    <br>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'editactivity' act.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-pencil"></span>
+     </button>
+    </a>
+   </div>
+
+      <div class="col-md-1">
+    <a href="{% url 'addnote' act.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-list-alt"></span>
+     </button>
+    </a>
+   </div>
+
+      <div class="col-md-1">
+    <a href="{% url 'addresource' act.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-usd"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+  </div>
+ {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> National ID	:	{{output.op_hi_num}}</p>
+  <p class="h2"> First Name		:	{{output.op_qty}}</p>
+  <p class="h2"> Surname		:	{{output.op_unit}}</p>
+  <p class="h2"> Date Of Birth	:	{{output.op_grade}}</p>
+  <p class="h2"> Relationship	:	{{output.op_description}}</p>
+  <p class="h2"> Gender			:	{{output.op_trans_date}}</p>
+  <p class="h2"> Birth Entry	:	{{output.op_status_date}}</p>
+  <p class="h2"> Status			:	{{output.ot_status}}</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

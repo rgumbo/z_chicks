@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div  class="col-md-10 col-xs-10 col-sm-10">
+    <h3 class="round3" style="text-align:center;">Store Order</h3>
+  </div>
+  <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ </div>
+ <div class="row">
+  <div class="col-md-10 col-xs-10 col-sm-10"></div>
+  <div class="col-md-2 col-xs-1 col-sm-1">
+   <br/>
+
+  </div>
+ </div>
+ <br/>
+ {% for s_order in StoreOrders_list %}
+  <div class="row">
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+   <div class="col-md-7 col-xs-7 col-sm-7">
+    <ul class="list-group">
+       <li class="list-group-item ">
+     <a href="{% url 'addorderitem' s_order.pk s_order.so_p_s%}">{{s_order.so_num}} - {{s_order.so_code}} - {{s_order.so_cs_num}} -
+      {{s_order.so_type}} - {{s_order.so_p_s}} - {{s_order.so_mobile}} - {{s_order.so_email}} -
+      {{s_order.so_contact}} - {{s_order.so_paddress}} -{{s_order.so_ord_date}} - {{s_order.so_del_date}} -
+      {{s_order.so_to_code}} - {{s_order.so_status}} - {{s_order.so_received}} - {{s_order.so_rec_date}} -
+      {{s_order.so_invoiced}} - {{s_order.so_inv_date}}</a>  <span class="badge"></span>
+    </li>
+     </ul>
+    <br>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'editstoreorder' s_order.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-pencil"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'addorderitem' s_order.pk s_order.so_p_s%}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-th-list"></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1">
+    <a href="{% url 'orderitem' s_order.pk %}">
+     <button type="button" class="btn btn-info">
+      <span class="glyphicon glyphicon-envelope""></span>
+     </button>
+    </a>
+   </div>
+
+   <div class="col-md-1 col-xs-1 col-sm-1"></div>
+  </div>
+ {% endfor %}
+</div>
+{% endblock %}

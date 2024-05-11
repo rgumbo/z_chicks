@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Code	        :	{{s_type.st_code}}		</p>
+  <p class="h2"> Name		    :	{{s_type.st_name}}	</p>
+  <p class="h2"> Location		:	{{s_type.st_sl_code}}	</p>
+  <p class="h2"> Description	:	{{s_type.st_desc}}		</p>
+  <p class="h2"> Status	        :	{{s_type.st_status}}	</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

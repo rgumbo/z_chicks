@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Code	    :	{{hold.hd_code}}</p>
+  <p class="h2"> Name		:	{{hold.hd_name}}</p>
+  <p class="h2"> Holder		:	{{hold.hd_ee_num}}</p>
+  <p class="h2"> Desc	    :	{{hold.hd_desc}}</p>
+  <p class="h2"> District	:	{{hold.hd_dt_code}}</p>
+  <p class="h2"> Type		:	{{hold.hd_type}}</p>
+  <p class="h2"> Status	    :	{{hold.hd_status}}</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

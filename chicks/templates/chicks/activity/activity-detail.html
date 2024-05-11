@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Holding Instance	:	{{act.ac_hi_num}}		</p>
+  <p class="h2"> Activity Type		:	{{act.ac_type}}	</p>
+  <p class="h2"> Desc		        :	{{act.ac_desc}}	</p>
+  <p class="h2"> Planned Start Date	:	{{act.ac_pstart_date}}		</p>
+  <p class="h2"> Planned End Date	:	{{act.ac_pend_date}}	</p>
+  <p class="h2"> Actual Start Date	:	{{act.ac_astart_date}}	</p>
+  <p class="h2"> Actual End Date	:	{{act.ac_aend_date}}	</p>
+  <p class="h2"> Status			    :	{{act.ac_status}}	</p>
+  <p class="h2"> Remarks			:	{{act.ac_remark}}	</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

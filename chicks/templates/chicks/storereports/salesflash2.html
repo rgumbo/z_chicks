@@ -1,0 +1,44 @@
+<div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Sales Flash By Month'
+      },
+      xAxis: {
+          categories: [
+            {% for entry in dataset %}'{{ entry.so_ord_date__month }} '{% if not forloop.last %}, {% endif %}{% endfor %}
+          ]
+      },
+      series: [{
+          name: 'Base Value',
+          data: [
+            {% for entry in dataset %}{{ entry.base_amnt }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'green'
+      }, {
+          name: 'Tax Amount',
+          data: [
+            {% for entry in dataset %}{{ entry.tax_amnt }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'red'
+      },
+{
+          name: 'Discount Amount',
+          data: [
+            {% for entry in dataset %}{{ entry.disc_amnt }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'purple'
+      },
+{
+          name: 'Net Value',
+          data: [
+            {% for entry in dataset %}{{ entry.due_amnt }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'orange'
+      }]
+  });
+</script>

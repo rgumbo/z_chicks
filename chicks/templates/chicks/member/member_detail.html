@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Number			 :	{{member.mm_num}}		    </p>
+  <p class="h2"> Code			 :	{{member.mm_code}}		</p>
+  <p class="h2"> Trade Name		 :	{{member.mm_trade_name}}	</p>
+  <p class="h2"> Name			 :	{{member.mm_name}}		</p>
+  <p class="h2"> Commenced		 :	{{member.mm_comm_date}}	</p>
+  <p class="h2"> Date Registered :	{{member.mm_reg_date}}	</p>
+  <p class="h2"> Town			 :	{{member.mm_to_code}}		</p>
+  <p class="h2"> Phones			 :	{{member.mm_phone1}}		</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}

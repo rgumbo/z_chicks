@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% block content %}
+<br>
+<br>
+Store orders
+<br>
+<br>
+<br>
+
+
+  <form style="margin-left:2.5em" method="get">
+    {{ filter.form.as_p }}
+
+<!--  <label for="period">Transaction Listing:</label>
+  <input type="number" id="period" name="period"><br><br> -->
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="col-md-10 col-xs-10 col-sm-10">
+  <ul>
+       <br>
+      Total Gross         :  {{ total_base.TotBase|floatformat:2|intcomma }} -----
+      <br>
+      Total Tax           :  {{ total_tax.TotTax|floatformat:2|intcomma }}
+      <br>
+      Total Discount      :  {{ total_disc.TotDisc|floatformat:2|intcomma }} -----
+      <br>
+      Total Net Amount    :  {{ total_due.DueAmnt|floatformat:2|intcomma }}
+      <br>
+      <br>
+      Order Date   Store  Gross Amount Tax Amount Disc Amount Net Amount
+      <br>
+      <br>
+
+  {% for ord in filter.qs %}
+
+       <li> <a>
+
+            {{ord.so_ord_date}} - {{ord.so_sn_code__sn_name}} - {{ord.base_amnt|floatformat:2|intcomma}}
+           {{ord.tax_amnt|floatformat:2|intcomma}} {{ord.disc_amnt|floatformat:2|intcomma}}
+           {{ord.due_amnt|floatformat:2|intcomma}}
+
+           {% endfor %}
+  </a>
+  </ul>
+
+  </div>
+
+{% endblock %}

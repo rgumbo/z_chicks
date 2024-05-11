@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+<div class="row"></div>
+<br/>
+<div class="row">
+ <div class="col-md-1 col-xs-1 col-sm-1">
+    </div>
+ <div class="col-md-8 col-xs-8 col-sm-8">
+  <p class="h2"> Order Num	    :	{{s_order.so_num}}		</p>
+  <p class="h2"> Ref		    :	{{s_order.so_code}}	</p>
+  <p class="h2"> Customer		:	{{s_order.so_cs_num}}	</p>
+  <p class="h2"> Type	        :	{{s_order.so_type}}		</p>
+  <p class="h2"> Contact	    :	{{s_order.so_contact}}	</p>
+  <p class="h2"> Phone	        :	{{s_order.so_mobile}}	</p>
+  <p class="h2"> Email	        :	{{s_order.so_email}}	</p>
+  <p class="h2"> Order Date		:	{{s_order.so_ord_date}}	</p>
+  <p class="h2"> Delivery Date	:	{{s_order.so_del_date}}	</p>
+  <p class="h2"> Receipt Date	:	{{s_order.so_rec_date}}	</p>
+  <p class="h2"> Invoice Date	:	{{s_order.so_inv_date}}	</p>
+  <p class="h2"> Status			:	{{s_order.so_status}}	</p>
+
+    </div>
+
+<div class="row"> </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+ <div class="col-md-10 col-xs-10 col-sm-10">
+
+ </div>
+ <div class="col-md-1 col-xs-1 col-sm-1"></div>
+</div>
+</div>
+{% endblock %}
