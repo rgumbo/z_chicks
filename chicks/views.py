@@ -79,11 +79,12 @@ from .forms import QualificationForm,CountryForm,RegionForm,TownForm,DistrictFor
     HoldingForm,HoldingInstanceForm,ActivityForm,NoteForm,ResourceForm,OutPutForm,CustOrdersForm, \
     RegionForm_e,TownForm_e,DistrictForm_e, WardForm_e,VillageForm_e, EmployeeForm_e , \
     PackTypeForm,CurrencyForm, StoreNameForm, StockLocForm, StockTypeForm, StockItemForm, CustomerForm,\
-    StoreOrderForm, OrderItemForm,OrderItemEditForm,OrdRunForm
+    StoreOrderForm, OrderItemForm,OrderItemEditForm,OrdRunForm,ContributionForm, BlogForm
 
 from .models import Qualification,ContractType, Country,Region,Town,District,Grade, Ward,\
         Village,Grade,Member,Employee,Holding,HoldingInstance,Activity,Note,Resource,OutPut,CustOrders, \
-        PackType,Currency, StoreName, StockLoc, StockType, StockItem, Customer, StoreOrder, OrderItem
+        PackType,Currency, StoreName, StockLoc, StockType, StockItem, Customer, StoreOrder, OrderItem, \
+        BlogPost, PostContribution
 
 #Start Views
 
@@ -877,7 +878,7 @@ def HoldingInstanceView(request, pk):
         return redirect('holding')
     else:
         form = HoldingInstanceForm()
-    return render(request, 'chicks/holdinginstance/stockloc.html', {'form': form})
+    return render(request, 'chicks/holdinginstance/holdinginstance.html', {'form': form})
 
 # Edit a HoldingInstance
 def EditHoldingInstance(request, pk, template_name='chicks/holdinginstance/edit.html'):
@@ -2384,3 +2385,107 @@ def StoreFlashView(request):
     dump = json.dumps(chart, cls=DecimalEncoder)
 
     return render(request, 'chicks/reports/charts/s_flash.html', {'chart': dump})
+
+#Start Commspace Views
+
+class PostList(generic.ListView):
+
+    queryset = BlogPost.objects.filter(bp_status='P').order_by('-ad_date_c')
+    template_name = 'chicks/commspace/index.html'
+
+    context_object_name = 'post_list'
+    paginate_by = 20
+
+class PostListAdmin(generic.ListView):
+
+    queryset = BlogPost.objects.exclude(bp_status='P').order_by('-ad_date_c')
+    template_name = 'chicks/commspace/index.html'
+
+    context_object_name = 'post_list'
+    paginate_by = 20
+
+class PostDetail(generic.DetailView):
+    model = BlogPost
+    template_name = 'chicks/commspace/post_detail.html'
+
+@login_required
+def Post_Detail(request, slug):
+
+    c_user = request.user
+    print(c_user)
+
+    template_name = 'chicks/commspace/post_detail.html'
+    post = get_object_or_404(BlogPost, slug=slug)
+
+    if request.user.username in ("reg","xx"):
+        contributions = post.contributions.all()
+        #print(c_user)
+    else:
+        contributions = post.contributions.filter(pc_active=True)
+        print(request.user.username)
+
+    new_contribution = None
+    # Contribution posted
+    if request.method == 'POST':
+        contribution_form = ContributionForm(data=request.POST)
+
+        if contribution_form.is_valid():
+
+            # Create Contribution object but don't save to database yet
+            new_contribution = contribution_form.save(commit=False)
+            # Assign the current post to the Contribution
+            new_contribution.pc_bp_num = post
+            # Save the comment to the database
+            new_contribution.save()
+    else:
+        contribution_form = ContributionForm()
+
+    return render(request, template_name, {'post': post,
+                                           'contributions': contributions,
+                                           'new_contribution': new_contribution,
+                                           'contribution_form': contribution_form})
+@login_required
+def post_new(request):
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.ad_user_c = request.user
+            post.save()
+
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = BlogForm()
+    return render(request, 'chicks/commspace/post_edit.html', {'form': form})
+
+@login_required
+def post_edit(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug)
+    if request.method == "POST":
+        form = BlogForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.ad_user_a = request.user
+            post.save()
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = BlogForm(instance=post)
+    return render(request, 'chicks/commspace/post_edit.html', {'form': form,'post': post})
+
+@login_required
+def post_remove(request, slug):
+    post = get_object_or_404(BlogPost, slug=slug)
+    post.delete()
+    return redirect('bloghome')
+
+@login_required
+def cont_approve(request, pk):
+    contribution = get_object_or_404(PostContribution, pk=pk)
+    contribution.approve_contributions()
+    return redirect('bloghome')
+
+@login_required
+def cont_remove(request, pk):
+    contribution = get_object_or_404(PostContribution, pk=pk)
+    contribution.delete()
+    return redirect('bloghome')

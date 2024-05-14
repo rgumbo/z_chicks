@@ -969,3 +969,137 @@ class OrderItem(models.Model):
 
     def get_post_url(self):
         return reverse('edit', kwargs={'pk': self.pk})
+
+#Start Interation Models
+
+class PostCategory(models.Model):
+	ct_code = models.CharField(verbose_name='Code', max_length=10, primary_key=True,help_text='Enter code uniquely identifying post category')
+	ct_desc = models.CharField(max_length=50, blank=True, null=True, help_text='The description of the category')
+	ct_seo_title = models.CharField(verbose_name = 'SEO Title',max_length=300, blank=True, null=True, help_text='The SEO title of the blog')
+	ct_seo_desc = models.CharField(verbose_name = 'SEO Description',max_length=250, blank=True, null=True, help_text='The SEO description of the blog')
+	slug = models.SlugField(max_length=250, unique=True, help_text='The slug field for the blog for user facing title', blank=True)
+	ad_user_c = models.CharField(max_length=30, blank=True, null=True, help_text='The user creating the record')
+	ad_user_a = models.CharField(max_length=30, blank=True, null=True, help_text='The last amending user')
+	ad_date_c = models.DateTimeField(auto_now_add=True, help_text='Date record was created')
+	ad_date_a = models.DateTimeField(auto_now=True, help_text='Date record was last amended')
+	ad_device_c = models.CharField(max_length=100, blank=True, null=True, help_text='The Device creating the record')
+	ad_device_a = models.CharField(max_length=100, blank=True, null=True, help_text='The Last amending device')
+	ad_ipadress_c = models.CharField(max_length=50, blank=True, null=True, help_text='The record creating ip address')
+	ad_ipadress_a = models.CharField(max_length=50, blank=True, null=True, help_text='The last amending ip address')
+
+	class Meta:
+		ordering = ['ct_desc']
+		verbose_name = 'Blog Category'
+
+	def save(self, *arg, **kwargs):
+		self.slug = slugify(str(self.ct_desc))
+		super(PostCategory, self).save(*arg, **kwargs)
+
+	def __str__(self):
+		return self.ct_desc
+
+	def get_absolute_url(self):
+		return reverse('IndexView', args=[str(self.ct_desc)])
+
+	def get_post_url(self):
+		return reverse('edit', kwargs={'pk': self.pk})
+
+class PostOrigin(models.Model):
+	po_num = models.CharField(verbose_name='Code', max_length=10, primary_key=True,help_text='Enter code uniquely identifying originator of the post')
+	po_name = models.CharField(max_length=100, blank=True, null=True, help_text='The name of the originator')
+	po_position = models.CharField(max_length=50, blank=True, null=True, help_text='The position/title of the originator')
+	ad_user_c = models.CharField(max_length=30, blank=True, null=True, help_text='The user creating the record')
+	ad_user_a = models.CharField(max_length=30, blank=True, null=True, help_text='The last amending user')
+	ad_date_c = models.DateTimeField(auto_now_add=True, help_text='Date record was created')
+	ad_date_a = models.DateTimeField(auto_now=True, help_text='Date record was last amended')
+	ad_device_c = models.CharField(max_length=100, blank=True, null=True, help_text='The Device creating the record')
+	ad_device_a = models.CharField(max_length=100, blank=True, null=True, help_text='The Last amending device')
+	ad_ipadress_c = models.CharField(max_length=50, blank=True, null=True, help_text='The record creating ip address')
+	ad_ipadress_a = models.CharField(max_length=50, blank=True, null=True, help_text='The last amending ip address')
+
+	class Meta:
+		ordering = ['po_name']
+		verbose_name = 'PostOrigin'
+
+	def __str__(self):
+		return self.po_name
+
+	def get_absolute_url(self):
+		return reverse('IndexView', args=[str(self.po_name)])
+
+	def get_post_url(self):
+		return reverse('edit', kwargs={'pk': self.pk})
+
+class BlogPost(models.Model):
+	bp_choices = (('D', 'Draft'), ('R', 'Peered'), ('P', 'Publish'))
+	bp_num = models.AutoField(verbose_name='Post Number',primary_key=True, help_text='Number uniquely identifying the post')
+	bp_ct_code = models.ForeignKey(PostCategory, on_delete=models.CASCADE,verbose_name='Category', help_text='Category into which this post falls')
+	bp_po_num = models.ForeignKey(PostOrigin, on_delete=models.CASCADE,verbose_name='Originator', help_text='The originator of the post')
+	bp_heading = models.CharField(verbose_name='Heading',max_length=100, help_text='The heading of the post')
+	bp_seo_title = models.CharField(verbose_name = 'SEO Title',max_length=300, blank=True, null=True, help_text='The SEO title of the blog')
+	bp_seo_desc = models.CharField(verbose_name = 'SEO Description',max_length=250, blank=True, null=True, help_text='The SEO description of the blog')
+	slug = models.SlugField(max_length=250, unique=True, help_text='The slug field for the blog for user facing title', blank=True)
+	bp_date = models.DateTimeField(auto_now_add=True, help_text='Date on which this post was created')
+	bp_body = models.TextField(verbose_name='Message',max_length=350, help_text='The post s message')
+	bp_status = models.CharField(verbose_name='Status',max_length=1, choices=bp_choices, default='D', help_text='Enter the status of the post')
+	bp_file = models.FileField(upload_to='media/', verbose_name='Attachment File', help_text = 'Choose File to upload',blank=True,null=True)
+	bp_image = models.ImageField(upload_to='media/', verbose_name='Image', help_text='Choose image to upload',blank=True,null=True)
+	ad_user_c = models.CharField(max_length=30, blank=True, null=True, help_text='The user creating the record')
+	ad_user_a = models.CharField(max_length=30, blank=True, null=True, help_text='The last amending user')
+	ad_date_c = models.DateTimeField(auto_now_add=True, help_text='Date record was created')
+	ad_date_a = models.DateTimeField(auto_now=True, help_text='Date record was last amended')
+	ad_device_c = models.CharField(max_length=100, blank=True, null=True, help_text='The Device creating the record')
+	ad_device_a = models.CharField(max_length=100, blank=True, null=True, help_text='The Last amending device')
+	ad_ipadress_c = models.CharField(max_length=50, blank=True, null=True, help_text='The record creating ip address')
+	ad_ipadress_a = models.CharField(max_length=50, blank=True, null=True, help_text='The last amending ip address')
+
+	class Meta:
+		ordering = ['bp_date']
+		verbose_name = 'Blog Post'
+
+	def save(self, *arg, **kwargs):
+		self.slug = slugify(str(self.bp_heading))
+		super(BlogPost, self).save(*arg, **kwargs)
+
+	def __str__(self):
+		return self.bp_heading
+
+	def get_absolute_url(self):
+		#return reverse('Index', args=[str(self.bp_heading)])
+		return reverse('index', kwargs={'pk': self.pk, 'slug': self.slug})
+
+	def get_post_url(self):
+		return reverse('edit', kwargs={'pk': self.pk})
+
+class PostContribution(models.Model):
+	pc_num = models.AutoField(verbose_name='Contribution Number',primary_key=True, help_text='Number uniquely identifying the contribution')
+	pc_bp_num = models.ForeignKey(BlogPost, on_delete=models.CASCADE,verbose_name='BlogPost', db_column='pc_bp_num', related_name='contributions', help_text='The Reference post for this contribution')
+	pc_contribution = models.TextField(verbose_name='Contribution',max_length=350, help_text='The contribution to a post')
+	pc_email = models.EmailField(verbose_name='Email', blank=True, null=True,help_text='The contributor s email')
+	pc_contributor = models.CharField(verbose_name='Contributor',max_length=50, blank=True, null=True, help_text='The name of the contributor')
+	pc_active = models.BooleanField(verbose_name='Accepted',default=False , help_text='Indicates whether contribution is accepted or not')
+	ad_user_c = models.CharField(max_length=30, blank=True, null=True, help_text='The Creating record')
+	ad_user_a = models.CharField(max_length=30, blank=True, null=True, help_text='The last amending user')
+	ad_date_c = models.DateTimeField(auto_now_add=True, help_text='Date record was created')
+	ad_date_a = models.DateTimeField(auto_now=True, help_text='Date record was last amended')
+	ad_device_c = models.CharField(max_length=100, blank=True, null=True, help_text='The Device creating the record')
+	ad_device_a = models.CharField(max_length=100, blank=True, null=True, help_text='The Last amending device')
+	ad_ipadress_c = models.CharField(max_length=50, blank=True, null=True, help_text='The record creating ip address')
+	ad_ipadress_a = models.CharField(max_length=50, blank=True, null=True, help_text='The last amending ip address')
+
+	class Meta:
+		ordering = ['ad_date_c']
+		verbose_name = 'Contribution'
+
+	def __str__(self):
+		return self.pc_contribution
+
+	def get_absolute_url(self):
+		return reverse('Index', args=[str(self.pc_num)])
+
+	def get_post_url(self):
+		return reverse('edit', kwargs={'pk': self.pk})
+
+	def approve_contributions(self):
+		self.pc_active=True
+		self.save()

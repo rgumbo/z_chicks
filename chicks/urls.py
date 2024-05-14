@@ -198,7 +198,6 @@ urlpatterns = [
     path('custorders/', views.CustOrdersIndexView.as_view(), name='custorders'),
     path('deletecustorders/<str:pk>/', views.DeleteCustOrders, name='deletecustorders'),
 
-
 #Reports
 
     path('s_flash', views.SpotFlashView1, name='s_flash'),
@@ -213,6 +212,19 @@ urlpatterns = [
     path('storeorderp', views.StoreOrderPurView, name='storeorderp'),
     path('storeorderf', views.StoreSalesFlash1View, name='storeorderf'),
     path('storeorderm', views.MonthlySalesFlash1View, name='storeorderm'),
+
+#Blog URLs
+
+    path('bloghome', views.PostList.as_view(), name='bloghome'),
+    path('blogadmin', views.PostListAdmin.as_view(), name='blogadmin'),
+    #path('<slug:slug>/', views.PostDetail.as_view(), name='postdetail'),
+    path('post_detail/<slug>/', views.Post_Detail, name='post_detail'),
+    path('post_new/', views.post_new, name='post_new'),
+    #path('post/edit/<int:pk>/', views.post_edit, name='post_edit'),
+    path('post_edit/<slug>/', views.post_edit, name='post_edit'),
+    path('post_remove/<slug>/', views.post_remove, name='post_remove'),
+    path('cont_approve/<int:pk>/', views.cont_approve, name='cont_approve'),
+    path('cont_remove/<int:pk>/', views.cont_remove, name='cont_remove'),
  ]
 
 urlpatterns += [

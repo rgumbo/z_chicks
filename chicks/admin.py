@@ -7,7 +7,8 @@ from django.contrib import admin
 
 from .models import Qualification,ContractType, Country,Region,Town,District,Grade, Ward,Village,Grade, \
         Member,Employee,Holding,HoldingInstance,Activity,Note,Resource,OutPut,CustOrders, \
-        PackType,Currency, StoreName, StockLoc, StockType, StockItem, Customer, StoreOrder, OrderItem
+        PackType,Currency, StoreName, StockLoc, StockType, StockItem, Customer, StoreOrder, OrderItem,\
+        PostCategory, PostOrigin, BlogPost
 
 #Start Membership Admin Config
 
@@ -220,3 +221,37 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 # Register the OrderItem admin class with the associated model
 admin.site.register(OrderItem, OrderItemAdmin)
+
+# Define the PostCategory admin class
+class PostCategoryAdmin(admin.ModelAdmin):
+    list_display = ('ct_code','ct_desc','ct_seo_title','ct_seo_desc','slug')
+
+# Register the admin class with the PostCategory model
+admin.site.register(PostCategory, PostCategoryAdmin )
+
+# Define the PostOrigin admin class
+class PostOriginAdmin(admin.ModelAdmin):
+    list_display = ('po_num','po_name','po_position')
+
+# Register the admin class with the PostOrigin model
+admin.site.register(PostOrigin, PostOriginAdmin)
+
+# Define the BlogPost admin class
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('bp_heading', 'slug', 'bp_status','bp_date')
+    list_filter = ("bp_status",)
+    search_fields = ['bp_heading', 'bp_body']
+    prepopulated_fields = {'slug': ('bp_heading',)}
+
+# Register the admin class with the BlogPost model
+admin.site.register(BlogPost, BlogPostAdmin)
+
+# Define the PostContribution admin class
+class PostContributionAdmin(admin.ModelAdmin):
+    list_display = ('pc_contributor', 'pc_contribution', 'pc_bp_num', 'ad_date_c', 'pc_active')
+    list_filter = ('pc_active', 'ad_date_c')
+    search_fields = ('pc_contributor', 'pc_email', 'pc_contribution')
+    actions = ['approve_contributions']
+
+    def approve_contributions(self, request, queryset):
+        queryset.update(pc_active=True)

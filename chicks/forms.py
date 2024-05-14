@@ -399,3 +399,52 @@ class OrderItemEditForm(forms.ModelForm):
         # 'od_trans_date': widgets.DateInput(attrs={'type': 'date'}),
         # 'od_status_date': widgets.DateInput(attrs={'type': 'date'}),
         # }
+
+#Blog App Forms
+# Start Interactions Form
+from django.db import models
+#from django import forms
+from .models import PostCategory, PostOrigin,BlogPost,PostContribution
+
+#from .models import PostContribution
+#from django import forms
+
+from django import forms
+#from .models import BlogPost, PostContribution
+
+class PostCategoryForm(forms.Form):
+	ct_code = models.CharField(verbose_name='Code', max_length=10, help_text='Enter code uniquely identifying post category')
+	ct_desc = models.CharField(max_length=50, blank=True, null=True, help_text='The description of the category')
+
+class PostOriginForm(forms.Form):
+	po_num = models.CharField(verbose_name='Code', max_length=10, help_text='Enter code uniquely identifying originator of the post')
+	po_name = models.CharField(max_length=100, blank=True, null=True, help_text='The name of the originator')
+	po_position = models.CharField(max_length=50, blank=True, null=True, help_text='The position/title of the originator')
+
+class BlogPostForm(forms.Form):
+	bp_choices = (('D', 'Draft'), ('R', 'Peered'), ('P', 'Publish'))
+	bp_num = models.AutoField(verbose_name='Post Number',help_text='Number uniquely identifying the post')
+	bp_ct_code = models.ForeignKey(PostCategory, on_delete=models.CASCADE,verbose_name='Category', help_text='Category into which this post falls')
+	bp_po_num = models.ForeignKey(PostOrigin, on_delete=models.CASCADE,verbose_name='Originator', help_text='The originator of the post')
+	bp_heading = models.CharField(verbose_name='Heading',max_length=100, help_text='The heading of the post')
+	bp_date = models.DateTimeField(auto_now_add=True, help_text='Date on which this post was created')
+	bp_body = models.TextField(verbose_name='Message',max_length=200, help_text='The post s message')
+	bp_status = models.CharField(verbose_name='Status',max_length=1, choices=bp_choices, help_text='Enter the status of the post')
+	bp_file = models.FileField(upload_to='media/', verbose_name = 'Choose File to upload',blank=True,null=True)
+	bp_image = models.ImageField(upload_to='media/', verbose_name = 'Choose image to upload',blank=True,null=True)
+
+class PostContributionForm(forms.Form):
+	pc_num = models.AutoField(verbose_name='Contribution Number',primary_key=True, help_text='Number uniquely identifying the contribution')
+	pc_bp_num = models.ForeignKey(BlogPost, on_delete=models.CASCADE,verbose_name='BlogPost', help_text='The of the post')
+	pc_contribution = models.TextField(verbose_name='Contribution',max_length=350, help_text='The contribution to a post')
+
+class BlogForm(forms.ModelForm):
+	class Meta:
+		model = BlogPost
+		fields = ('bp_ct_code','bp_po_num','bp_heading','bp_body','bp_status','bp_file','bp_image')
+
+class ContributionForm(forms.ModelForm):
+	class Meta:
+		model = PostContribution
+		fields = ('pc_contributor', 'pc_email', 'pc_contribution')
+		#'pc_bp_num',
