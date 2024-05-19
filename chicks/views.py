@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .filters import CustOrdersFilter, StoreOrderFilter,OrderItemFilter
+from .filters import CustOrdersFilter, StoreOrderFilter,OrderItemFilter,RegHoldingFilter
 #imports to be cleaned up
 
 from django.http import HttpResponse
@@ -131,13 +131,21 @@ def MyStoreView(Request):
     context = {}
 
     return render (Request, template, context)
+def FarmReportsView(Request):
+    template = 'chicks/farmreps.html'
+    context = {}
 
+    return render (Request, template, context)
+def StoreReportsView(Request):
+    template = 'chicks/storereports.html'
+    context = {}
+
+    return render (Request, template, context)
 def StoreParamView(Request):
     template = 'chicks/storeparams.html'
     context = {}
 
     return render (Request, template, context)
-
 def StoreTransView(Request):
     template = 'chicks/storestrans.html'
     context = {}
@@ -882,7 +890,7 @@ def HoldingInstanceView(request, pk):
 
 # Edit a HoldingInstance
 def EditHoldingInstance(request, pk, template_name='chicks/holdinginstance/edit.html'):
-    holdinginstance = get_object_or_404(Holding, pk=pk)
+    holdinginstance = get_object_or_404(HoldingInstance, pk=pk)
     form = HoldingInstanceForm(request.POST or None, instance=holdinginstance)
     if form.is_valid():
         form.save()
@@ -1288,6 +1296,36 @@ def SpotFlashView1(request):
             wgt_sum=Avg('ac_a_wqt')).order_by('ac_hi_num')
 
         return render(request, 'chicks/reports/charts/s_flash1.html', {'dataset': dataset})
+def HoldFlashView(request):
+    # global l_gr_num
+
+    dataset = Holding.objects.values('hd_rg_code__rg_name').annotate(
+        num_hold=Count('hd_num'), tot_land=Sum('hd_size'))
+
+    return render(request, 'chicks/reports/charts/h_flash.html', {'dataset': dataset})
+
+def InstFlashView(request):
+    # global l_gr_num
+
+    dataset = HoldingInstance.objects.values('hi_hd_num__hd_rg_code__rg_name').annotate(
+        num_hold=Count('hi_hd_num',distinct=True),num_inst=Count('hi_hd_num'), tot_land=Sum('hi_asize'), tot_qty=Sum('hi_tqty'))
+
+    return render(request, 'chicks/reports/charts/i_flash.html', {'dataset': dataset})
+def HoldingInstSearchView(request):
+
+    dataset = HoldingInstance.objects.values('hi_hd_num__hd_rg_code__rg_name').annotate(
+        num_hold=Count('hi_hd_num',distinct=True),num_inst=Count('hi_hd_num'), tot_land=Sum('hi_asize'), tot_qty=Sum('hi_tqty'))
+
+    rg_holding = RegHoldingFilter(request.GET, queryset=dataset)
+    total_hold = rg_holding.qs.aggregate(TotHold=Sum('num_hold'))
+    total_inst = rg_holding.qs.aggregate(TotInst=Sum('num_inst'))
+    total_land = rg_holding.qs.aggregate(TotLand=Sum('tot_land'))
+    total_qty = rg_holding.qs.aggregate(TotQty=Sum('tot_qty'))
+
+    context = {'filter': rg_holding, 'total_hold': total_hold, 'total_inst': total_inst,
+               'total_land': total_land, 'total_qty': total_qty}
+
+    return render(request, 'chicks/reports/charts/members_holdingsf.html', context)
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -2077,12 +2115,12 @@ def DeleteOrderItem(request, pk, template_name='chicks/OrderItem/confirm_delete.
     return render(request, template_name, {'object': orderitem})
 
 #Stores Reports
-
 def OrderItemRepView(request):
         # global l_gr_num
 
         total = 0
-        storders = OrderItem.objects.values('oi_si_code__si_name','oi_so_num').annotate(tot_amnt=Sum(F('oi_trans_amnt')),tot_qty=Sum(F('oi_ord_qty')) )
+        storders = OrderItem.objects.values('oi_si_code__si_name','oi_so_num','ad_date_c__month')\
+            .annotate(tot_amnt=Sum(F('oi_trans_amnt')),tot_qty=Sum(F('oi_ord_qty')) )
 
         st_orders= OrderItemFilter(request.GET, queryset=storders)
         total_qty = st_orders.qs.aggregate(Totqty=Sum('tot_qty'))
@@ -2091,7 +2129,14 @@ def OrderItemRepView(request):
         context = {'filter': st_orders, 'total_qty': total_qty, 'total_val': total_val}
 
         return render(request, 'chicks/storereports/orderitem.html', context)
+def OrderItemChartView(request):
+    # global l_gr_num
 
+    total = 0
+    dataset = OrderItem.objects.values('oi_si_code__si_name', 'oi_so_num', 'ad_date_c__month') \
+        .annotate(tot_amnt=Sum(F('oi_trans_amnt')), tot_qty=Sum(F('oi_ord_qty')))
+
+    return render(request, 'chicks/storereports/salesflash1.html', {'dataset': dataset})
 def StoreOrderSalesView(request):
     # global l_gr_num
 
@@ -2110,7 +2155,6 @@ def StoreOrderSalesView(request):
     context = {'filter': st_orders, 'total_base': total_base, 'total_tax': total_tax, 'total_disc': total_disc, 'total_due': total_due}
 
     return render(request, 'chicks/storereports/storeoder.html', context)
-
 def StoreOrderPurView(request):
     # global l_gr_num
 
@@ -2457,7 +2501,6 @@ def post_new(request):
     else:
         form = BlogForm()
     return render(request, 'chicks/commspace/post_edit.html', {'form': form})
-
 @login_required
 def post_edit(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)

@@ -517,7 +517,7 @@ class Resource(models.Model):
     rs_required	=	models.DecimalField(verbose_name='Required',max_digits=10, decimal_places=2, default=0, help_text='Resources required', null=True, 						blank=True)
     rs_provided	=	models.DecimalField(verbose_name='Provided',max_digits=10, decimal_places=2, default=0, help_text='Actual Price of instance', null=True, 					blank=True)
     rs_date_provided	=	models.DateTimeField(verbose_name='Date Provided', help_text='Date resources were provided')
-    rs_req_date	=	models.DateTimeField(verbose_name='Date requested', help_text='Date Resources were requested')
+    rs_req_date	=	models.DateTimeField(verbose_name='Date required', help_text='Date Resources are required')
     rs_approved	=	models.CharField(verbose_name='Approved', max_length=1,choices=type_choice, help_text='Status of the notes')
     rs_status	=	models.CharField(verbose_name='Status', max_length=1,choices=status_choice, default='1', help_text='Status of the notes')
     ad_user_c	=	models.CharField(max_length=30, blank=True, null=True, help_text='The user creating the record')

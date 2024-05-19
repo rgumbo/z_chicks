@@ -8,6 +8,8 @@ urlpatterns = [
     path('genparams', views.ParaHomeView, name='genparams'),
     path('trans', views.TransHomeView, name='trans'),
     path('farmproj', views.FarmProjHomeView, name='farmproj'),
+    path('infocentre', views.FarmReportsView, name='infocentre'),
+    path('storereports', views.StoreReportsView, name='storereports'),
 
 #urls for Store app
 
@@ -201,6 +203,11 @@ urlpatterns = [
 #Reports
 
     path('s_flash', views.SpotFlashView1, name='s_flash'),
+
+    path('h_flash', views.HoldFlashView, name='h_flash'),
+
+    path('i_flash', views.InstFlashView, name='i_flash'),
+    path('i_summary', views.HoldingInstSearchView, name='i_summary'),
 
     path('g_position_tab', views.MyOrdersView, name='g_position_tab'),
     path('g_position_tab1', views.OrdersHTMxTableView.as_view(), name='g_position_tab1'),

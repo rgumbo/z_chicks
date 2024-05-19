@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 
-{% load humanize %}
-{% block content %}
-<br>
-<br>
-Store orders
+<body>{% block content %}
+
 <br>
 <br>
 <br>
 
+Store 's  Orders
 
+<br>
+<br>
   <form style="margin-left:2.5em" method="get">
     {{ filter.form.as_p }}
 
@@ -19,34 +19,57 @@ Store orders
     <button type="submit">Search</button>
   </form>
 
-  <div class="col-md-10 col-xs-10 col-sm-10">
-  <ul>
+<div> <aside id="rightsidebar">
+    <div class="col-md-10 col-xs-10 col-sm-10">
+    <nav id="nav">
+
        <br>
-      Total Gross         :  {{ total_base.TotBase|floatformat:2|intcomma }} -----
+      Total Gross         :  {{ total_base.TotBase|floatformat:2}}
       <br>
-      Total Tax           :  {{ total_tax.TotTax|floatformat:2|intcomma }}
+      Total Tax           :  {{ total_tax.TotTax|floatformat:2}}
       <br>
-      Total Discount      :  {{ total_disc.TotDisc|floatformat:2|intcomma }} -----
+      Total Discount      :  {{ total_disc.TotDisc|floatformat:2}}
       <br>
-      Total Net Amount    :  {{ total_due.DueAmnt|floatformat:2|intcomma }}
+      Total Net Amount    :  {{ total_due.DueAmnt|floatformat:2}}
       <br>
       <br>
       Order Date   Store  Gross Amount Tax Amount Disc Amount Net Amount
       <br>
       <br>
 
-  {% for ord in filter.qs %}
 
-       <li> <a>
+    <table class="content" border="2px">
+    <thead>
+     <tr>
+        <th>Order Date</th>
+        <th>Store</th>
+        <th>Gross Amount</th>
+        <th>Tax Amount</th>
+        <th>Disc Amount</th>
+        <th>Net Amount</th>
+     </tr>
+   </thead>
 
-            {{ord.so_ord_date}} - {{ord.so_sn_code__sn_name}} - {{ord.base_amnt|floatformat:2|intcomma}}
-           {{ord.tax_amnt|floatformat:2|intcomma}} {{ord.disc_amnt|floatformat:2|intcomma}}
-           {{ord.due_amnt|floatformat:2|intcomma}}
+    <tbody>
+        <tr>
+        {% for ord in filter.qs %}
+            <td> {{ord.so_ord_date}} </td>
+            <td> {{ord.so_sn_code__sn_name}} </td>
+            <td> {{ord.base_amnt|floatformat:2}} </td>
+            <td> {{ord.tax_amnt|floatformat:2}} </td>
+            <td> {{ord.disc_amnt|floatformat:2}} </td>
+            <td>{{ord.due_amnt|floatformat:2}} </td>
+        </tr>
+        {% endfor %}
 
-           {% endfor %}
-  </a>
-  </ul>
+    </tbody>
 
-  </div>
 
+    </table>
+     </nav>
+      </div>
+
+ </aside> </div>
+</body>
 {% endblock %}
+</html>

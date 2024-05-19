@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustOrders,StoreOrder,OrderItem
+from .models import CustOrders,StoreOrder,OrderItem,HoldingInstance
 import django_filters
 #from decimal import Decimal
 from django.db.models import Q
@@ -30,6 +30,15 @@ class StoreOrderFilter(django_filters.FilterSet):
 
     def search_filter(self, queryset):
         return queryset.all() #filter(mr_gr_num=l_gr_num)
+class RegHoldingFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = HoldingInstance
+        fields = ['hi_hd_num__hd_rg_code']
+
+    def search_filter(self, queryset):
+        return queryset.all() #filter(mr_gr_num=l_gr_num)
+
 
 #class MembAdvFilter(django_filters.FilterSet):
  #   class Meta:

@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 
-{% load humanize %}
-{% block content %}
-<br>
-<br>
-My Orders...
+<body>{% block content %}
+
 <br>
 <br>
 <br>
 
+Store 's  Orders
 
+<br>
+<br>
   <form style="margin-left:2.5em" method="get">
     {{ filter.form.as_p }}
 
@@ -19,28 +19,51 @@ My Orders...
     <button type="submit">Search</button>
   </form>
 
-  <div class="col-md-10 col-xs-10 col-sm-10">
-  <ul>
-       <br>
-      Total Qty     :  {{ total_qty.Totqty|floatformat:2|intcomma }} -----
-      Total Value   :  {{ total_val.Totval|floatformat:2|intcomma }}
-      <br>
-      <br>
-      Trans Date   Order #  Customer Pur/Sales? Stock Item Quantity    Amount
+<div> <aside id="rightsidebar">
+    <div class="col-md-10 col-xs-10 col-sm-10">
+    <nav id="nav">
+
+       
       <br>
       <br>
 
-  {% for ord in filter.qs %}
+      Total Qty     :  {{ total_qty.Totqty|floatformat:2 }}
+      Total Value   :  {{ total_val.Totval|floatformat:2 }}
 
-       <li> <a>
-           {{ ord.oi_so_num }} - {{ ord.oi_si_code__si_name }}
-           - {{ ord.oi_ord_qty}} - {{ ord.tot_qty|floatformat:2|intcomma }} -
-           {{ ord.tot_amnt|floatformat:2|intcomma }}
+      <br>
+      <br>
 
-  {% endfor %}
+    <table class="content" border="2px">
+    <thead>
+     <tr>
 
-  </ul>
+        <th>Date</th>
+        <th>Order #</th>
+        <th>Stock Item</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+     </tr>
+   </thead>
 
-  </div>
+    <tbody>
+       <tr>
+        {% for ord in filter.qs %}
+            <td> {{ ord.ad_date_c__month }} </td>
+            <td> {{ ord.oi_so_num }} </td>
+            <td> {{ ord.oi_si_code__si_name }} </td>
+            <td> {{ord.tot_qty|floatformat:2 }} </td>
+            <td> {{ ord.tot_amnt|floatformat:2 }} </td>
+        </tr>
+        {% endfor %}
 
+    </tbody>
+
+
+    </table>
+     </nav>
+      </div>
+
+ </aside> </div>
+</body>
 {% endblock %}
+</html>

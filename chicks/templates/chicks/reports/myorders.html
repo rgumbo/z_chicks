@@ -1,15 +1,15 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 
-{% load humanize %}
-{% block content %}
-<br>
-<br>
-My Orders...
+<body>{% block content %}
+
 <br>
 <br>
 <br>
 
+My Orders
 
+<br>
+<br>
   <form style="margin-left:2.5em" method="get">
     {{ filter.form.as_p }}
 
@@ -19,28 +19,58 @@ My Orders...
     <button type="submit">Search</button>
   </form>
 
-  <div class="col-md-10 col-xs-10 col-sm-10">
-  <ul>
-       <br>
-      Total Qty     :  {{ total_qty.Totqty|floatformat:2|intcomma }} -----
-      Total Value   :  {{ total_val.Totval|floatformat:2|intcomma }}
+<div> <aside id="rightsidebar">
+    <div class="col-md-10 col-xs-10 col-sm-10">
+    <nav id="nav">
+
       <br>
       <br>
-      Order #   Batch  Customer Phone # Trans. Date        Item     Qty  Unit Price Status   Paid ?
+      Total Qty     :  {{ total_qty.Totqty|floatformat:2 }}
+      Total Value   :  {{ total_val.Totval|floatformat:2}}
       <br>
       <br>
 
-  {% for ord in filter.qs %}
+    <table class="content" border="2px">
+    <thead>
+     <tr>
+        <th>Order #</th>
+        <th>Batch</th>
+        <th>Phone #</th>
+        <th>Trans. Date</th>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Paid ?</th>
+     </tr>
+   </thead>
 
-       <li> <a>
-           {{ ord.od_num|stringformat:"04d" }} - {{ ord.od_hi_num__hi_code }} -  {{ ord.od_Custname }} -
-           {{ ord.od_phone|stringformat:"010d" }} -  {{ ord.od_trans_date|date:'D-M-Y'}} -
-           {{ ord.od_item }} - {{ ord.od_qty}} - {{ ord.od_unit_p }} - {{ ord.tot|floatformat:2|intcomma }} - {{ ord.ot_status }} - {{ ord.ot_paid }}
+    <tbody>
+        <tr>
+        {% for ord in filter.qs %}
+            <td> {{ ord.od_num|stringformat:"10d" }} </td>
+            <td> {{ ord.od_hi_num__hi_code }} </td>
+            <td> {{ ord.od_Custname }} </td>
+            <td> {{ ord.od_phone|stringformat:"010d" }} </td>
+            <td> {{ ord.od_trans_date|date:'D-M-Y'}} </td>
+	    <td> {{ ord.od_item }} </td>
+	    <td> {{ ord.od_qty}} </td>
+	    <td> {{ ord.od_unit_p }} </td>
+	    <td> {{ ord.tot|floatformat:2 }} </td>
+            <td> {{ ord.ot_status }} </td>
+ 	    <td> {{ ord.ot_paid }} </td>
+        </tr>
+        {% endfor %}
 
-  {% endfor %}
+    </tbody>
 
-  </ul>
 
-  </div>
+    </table>
+     </nav>
+      </div>
 
+ </aside> </div>
+</body>
 {% endblock %}
+</html>
